@@ -1,0 +1,230 @@
+openapi: "3.0.2"
+info:
+  title: Example Rest Archetype
+  version: 0.0.1
+
+tags:
+  - name: User
+    description: Operation concerning Users
+    externalDocs:
+      url: http://giacomino.com/user
+
+
+paths:
+  /example:
+    get:
+      tags:
+        - Example
+      summary: An example endpoint
+      description: An example endpoint
+      operationId: example
+      responses:
+        "200":
+          description: "hello world"
+
+  /users:
+    get:
+      tags:
+        - User
+      summary: Gets all User
+      description: Gets all users present.
+      operationId: getUsers
+      x-spring-paginated: true
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/User"
+            application/xml:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/User"
+        "400":
+          $ref: "#/components/responses/error400"
+        "404":
+          $ref: "#/components/responses/error404"
+        "500":
+          $ref: "#/components/responses/error500"
+
+  /users/{id}:
+    get:
+      tags:
+        - User
+      summary: Get User with respective ID
+      description: Get user by his ID.
+      operationId: getUserId
+      parameters:
+        - $ref: "#/components/parameters/findById"
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+            application/xml:
+              schema:
+                $ref: "#/components/schemas/User"
+        "400":
+          $ref: "#/components/responses/error400"
+        "404":
+          $ref: "#/components/responses/error404"
+        "500":
+          $ref: "#/components/responses/error500"
+
+  /users/roles/{id}:
+    get:
+      tags:
+        - User
+      summary: Get User with his Roles from ID
+      description: Get user (with roles) by his ID.
+      operationId: getUserIdWithRoles
+      parameters:
+        - $ref: "#/components/parameters/findById"
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+            application/xml:
+              schema:
+                $ref: "#/components/schemas/User"
+        "400":
+          $ref: "#/components/responses/error400"
+        "404":
+          $ref: "#/components/responses/error404"
+        "500":
+          $ref: "#/components/responses/error500"
+
+
+components:
+  parameters:
+    findById:
+      name: id
+      in: path
+      description: The ID of object to be returned
+      required: true
+      schema:
+        minimum: 0
+        type: integer
+        format: int64
+        default: 0
+
+    findByName:
+      name: name
+      in: path
+      description: The name of object to be returned
+      required: true
+      schema:
+        type: string
+        default: "name"
+
+  responses:
+    error500:
+      description: Internal Server Error
+      content:
+        application/xml:
+          schema:
+            $ref: "#/components/schemas/ProblemDetail"
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ProblemDetail"
+    error400:
+      description: Bad Request
+      content:
+        application/xml:
+          schema:
+            $ref: "#/components/schemas/ProblemDetail"
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ProblemDetail"
+    error404:
+      description: Not Found
+      content:
+        application/xml:
+          schema:
+            $ref: "#/components/schemas/ProblemDetail"
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ProblemDetail"
+
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+          minLength: 3
+          maxLength: 20
+        surname:
+          type: string
+          minLength: 3
+          maxLength: 20
+        username:
+          type: string
+          minLength: 3
+          maxLength: 30
+        email:
+          type: string
+          minLength: 3
+          maxLength: 30
+          format: email
+        roles:
+          type: array
+          items:
+            type: string
+      required:
+        - name
+        - surname
+        - username
+    Role:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        description:
+          type: string
+          minLength: 3
+          maxLength: 20
+        users:
+          type: array
+          items:
+            type: string
+      required:
+        - description
+
+    ProblemDetail:
+      type: object
+      properties:
+        type:
+          type: string
+          format: uri
+        title:
+          type: string
+        status:
+          type: integer
+        detail:
+          type: string
+        instance:
+          type: string
+          format: uri
+
+    ExampleModel:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+
+
