@@ -9,6 +9,18 @@
         <include>**/*.properties</include>
       </includes>
     </fileSet>
+    <fileSet filtered="true" encoding="UTF-8">
+      <directory>.idea</directory>
+      <includes>
+        <include>**/*.xml</include>
+      </includes>
+    </fileSet>
+    <fileSet encoding="UTF-8">
+      <directory>.idea</directory>
+      <includes>
+        <include>**/*.gitignore</include>
+      </includes>
+    </fileSet>
     <fileSet encoding="UTF-8">
       <includes>
         <include>.gitignore</include>
