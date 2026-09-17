@@ -14,8 +14,12 @@
 </ul>
 
 <pre><code>mvn archetype:generate \
-  -DarchetypeGroupId=[archetype.group.id] \
-  -DarchetypeArtifactId=[archetype.artifact.id] \
-  -DarchetypeVersion=[archetype.version]
+  -DarchetypeGroupId=[archetypeGroupId] \
+  -DarchetypeArtifactId=[archetypeArtifactId] \
+  -DarchetypeVersion=[archetypeVersion] \
+  -DgroupId=[groupId] \
+  -DartifactId=[artifactId] \
+  -Dversion=[version] \
+  -DinteractiveMode=false
 </code></pre>
 </div>
