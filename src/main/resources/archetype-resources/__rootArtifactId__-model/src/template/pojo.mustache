@@ -35,6 +35,7 @@
 {{#vendorExtensions.x-class-extra-annotation}}
 {{{vendorExtensions.x-class-extra-annotation}}}
 {{/vendorExtensions.x-class-extra-annotation}}
+
 public class {{classname}}{{#parent}} extends {{{parent}}}{{/parent}}{{^parent}}{{#hateoas}} extends RepresentationModel<{{classname}}> {{/hateoas}}{{/parent}}{{#vendorExtensions.x-implements}}{{#-first}} implements {{{.}}}{{/-first}}{{^-first}}, {{{.}}}{{/-first}}{{/vendorExtensions.x-implements}} {
 {{#serializableModel}}
   private static final long serialVersionUID = 1L;
@@ -61,27 +62,22 @@ public class {{classname}}{{#parent}} extends {{{parent}}}{{/parent}}{{^parent}}
   {{/required}}
   {{/useBeanValidation}}
   {{/lombok.RequiredArgsConstructor}}
-  {{#lombok.ToString}}
-  {{#isPassword}}
-  @lombok.ToString.Exclude
-  {{/isPassword}}
-  {{/lombok.ToString}}
-  {{#vendorExtensions.x-field-extra-annotation}}
-  {{{vendorExtensions.x-field-extra-annotation}}}
-  {{/vendorExtensions.x-field-extra-annotation}}
-  {{#vendorExtensions.x-extra-annotation}}
-  {{{vendorExtensions.x-extra-annotation}}}
-  {{/vendorExtensions.x-extra-annotation}}
-  {{#useBeanValidation}}
-  {{>beanValidation}}
-  {{/useBeanValidation}}
+  @JsonProperty("{{baseName}}"){{!
+}}{{#vendorExtensions.x-field-extra-annotation}}{{!
+}}{{{vendorExtensions.x-field-extra-annotation}}}{{!
+}}{{/vendorExtensions.x-field-extra-annotation}}{{!
+}}{{#vendorExtensions.x-extra-annotation}}{{!
+}}{{{vendorExtensions.x-extra-annotation}}}{{!
+}}{{/vendorExtensions.x-extra-annotation}}{{!
+}}{{#useBeanValidation}}{{!
+}}{{>beanValidation}}{{!
+}}{{/useBeanValidation}}
   {{^useBeanValidation}}
   {{#required}}
   @NotNull
   {{/required}}
   {{/useBeanValidation}}
   {{#jackson}}
-  @JsonProperty("{{baseName}}")
   {{#withXml}}
   @JacksonXmlProperty(localName = "{{items.xmlName}}{{^items.xmlName}}{{xmlName}}{{^xmlName}}{{baseName}}{{/xmlName}}{{/items.xmlName}}"{{#isXmlAttribute}}, isAttribute = true{{/isXmlAttribute}}{{#xmlNamespace}}, namespace = "{{.}}"{{/xmlNamespace}})
   {{#isContainer}}
@@ -125,6 +121,7 @@ public class {{classname}}{{#parent}} extends {{{parent}}}{{/parent}}{{^parent}}
   {{^lombok.Data}}
     {{! end feature: fluent setter methods for inherited properties }}
   {{^lombok.EqualsAndHashCode}}
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {

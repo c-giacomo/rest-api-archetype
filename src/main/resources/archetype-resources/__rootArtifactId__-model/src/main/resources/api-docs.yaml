@@ -39,13 +39,12 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/User"
-            application/xml:
-              schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/User"
         "400":
           $ref: "#/components/responses/error400"
+        "401":
+          $ref: "#/components/responses/error401"
+        "403":
+          $ref: "#/components/responses/error403"
         "404":
           $ref: "#/components/responses/error404"
         "500":
@@ -67,11 +66,12 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/User"
-            application/xml:
-              schema:
-                $ref: "#/components/schemas/User"
         "400":
           $ref: "#/components/responses/error400"
+        "401":
+          $ref: "#/components/responses/error401"
+        "403":
+          $ref: "#/components/responses/error403"
         "404":
           $ref: "#/components/responses/error404"
         "500":
@@ -93,11 +93,12 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/User"
-            application/xml:
-              schema:
-                $ref: "#/components/schemas/User"
         "400":
           $ref: "#/components/responses/error400"
+        "401":
+          $ref: "#/components/responses/error401"
+        "403":
+          $ref: "#/components/responses/error403"
         "404":
           $ref: "#/components/responses/error404"
         "500":
@@ -130,27 +131,30 @@ components:
     error500:
       description: Internal Server Error
       content:
-        application/xml:
-          schema:
-            $ref: "#/components/schemas/ProblemDetail"
         application/json:
           schema:
             $ref: "#/components/schemas/ProblemDetail"
     error400:
       description: Bad Request
       content:
-        application/xml:
+        application/json:
           schema:
             $ref: "#/components/schemas/ProblemDetail"
+    error401:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ProblemDetail"
+    error403:
+      description: Forbidden
+      content:
         application/json:
           schema:
             $ref: "#/components/schemas/ProblemDetail"
     error404:
       description: Not Found
       content:
-        application/xml:
-          schema:
-            $ref: "#/components/schemas/ProblemDetail"
         application/json:
           schema:
             $ref: "#/components/schemas/ProblemDetail"
@@ -206,19 +210,6 @@ components:
 
     ProblemDetail:
       type: object
-      properties:
-        type:
-          type: string
-          format: uri
-        title:
-          type: string
-        status:
-          type: integer
-        detail:
-          type: string
-        instance:
-          type: string
-          format: uri
 
     ExampleModel:
       type: object
